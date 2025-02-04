@@ -1,0 +1,17 @@
+[
+    {
+        "name": "burp",
+        "type": "http",
+        "address": "127.0.0.1:8080"
+    },
+    {
+        "name": "steam++",
+        "type": "http",
+        "address": "127.0.0.1:26561"
+    },
+    {
+        "name": "socks_proxy1",
+        "type": "socks",
+        "address": "127.0.0.1:1080"
+    }
+]

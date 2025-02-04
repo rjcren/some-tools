@@ -1,0 +1,10 @@
+*.log
+*.spec
+*test*
+
+study/
+*cache*/
+.venv/
+.vscode/
+build/
+dist/
