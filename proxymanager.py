@@ -120,19 +120,10 @@ class ProxyManagerApp:
         button_frame = tk.Frame(self.root)
         button_frame.pack(pady=10)
 
-        # 添加代理按钮
         tk.Button(button_frame, text="添加代理", command=self.show_add_dialog).grid(row=0, column=0, padx=5)
-
-        # 编辑代理按钮
         tk.Button(button_frame, text="编辑代理", command=self.show_edit_dialog).grid(row=0, column=1, padx=5)
-
-        # 删除代理按钮
         tk.Button(button_frame, text="删除代理", command=self.delete_preset).grid(row=0, column=2, padx=5)
-
-        # 设置代理按钮
         tk.Button(button_frame, text="设置代理", command=self.set_proxy_from_preset).grid(row=0, column=3, padx=5)
-
-        # 清除代理按钮
         tk.Button(button_frame, text="清除代理", command=ProxyManager.clear_proxy).grid(row=0, column=4, padx=5)
 
     def update_preset_list(self):
