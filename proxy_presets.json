@@ -10,8 +10,8 @@
         "address": "127.0.0.1:26561"
     },
     {
-        "name": "socks_proxy1",
-        "type": "socks",
-        "address": "127.0.0.1:1080"
+        "name": "v2free",
+        "type": "http",
+        "address": "127.0.0.1:10809"
     }
 ]

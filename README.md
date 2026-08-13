@@ -5,4 +5,4 @@ auto_click.py：自用连点器
 confession.py：模仿前段时间很火的表白程序写的小程序
 autorunsql.py：工作中用于批量执行sql文件的工具(python3.6)
 autorun.py：写的浏览器批量模拟点击的程序
-excel.py:
+excel.py：一个小的工具集，需要啥加啥
