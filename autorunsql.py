@@ -17,13 +17,13 @@ UPDATE_LOG = """
 【观前提示】
 注：此前版本全部作废
 由于个人水平有限，程序可能存在未发现的bug，如运行出现问题，请联系服务二部任巨晨；运行前建议前往github或找我获取最新版本
-https://github.com/rjcren/some-tools/releases/tag/auto
+https://github.com/rjcren/some-tools/releases
 
 【使用教程】
 1. 点击【设置】，填写数据库连接信息与 sqlplus.exe 路径，点【测试连接】确认可用；
-2. 选择要执行的 SQL 文件或文件夹（文件夹会递归查找所有 .sql 文件并按名称排序执行）；
-3. 如需失败转存，勾选【复制失败文件到目录】并指定目录；
-4. 点击【开始执行】，执行过程中可点【停止】（注意：已执行的 SQL 不会回滚）。
+2. 选择要执行的 SQL 文件或文件夹（文件夹会递归查找所有 .sql 文件并按名称排序执行）（注：需要将工具报错的文件在plsql单独执行）
+3. 如需失败转存，勾选【复制失败文件到目录】并指定目录
+4. 点击【开始执行】，执行过程中可点【停止】（注：已执行的 SQL 不会回滚）。
    单文件执行没有固定超时，长时间任务可通过【停止】主动中断。
 
 配置文件保存在当前用户的 AppData 目录中
@@ -590,6 +590,10 @@ class SQLPlusExecutor:
                     re.IGNORECASE
                 )
             ]
+            primary_error_lines = [
+                line for line in error_lines
+                if not re.search(r'\bORA-06512\b', line, re.IGNORECASE)
+            ]
 
             has_error = bool(error_lines)
             if retcode == 0 and not has_error:
@@ -602,7 +606,8 @@ class SQLPlusExecutor:
                 return False
             if has_error:
                 self.log(f"SQL 执行错误: {file_path}", "WARNING")
-                for line in error_lines:
+                self.log("SQL*Plus 返回的错误信息：", "ERROR")
+                for line in primary_error_lines or error_lines:
                     self.log(line, "ERROR")
                 return False
 
@@ -669,7 +674,7 @@ class SQLPlusExecutor:
                 "WARNING"
             )
         else:
-            self.log(f"批量完成：成功 {len(success_files)} 个，失败 {len(failed_files)} 个")
+            self.log(f"批量完成：成功 {len(success_files)} 个，失败 {len(failed_files)} 个，请单独执行失败文件。")
         if failed_files:
             self.log("失败列表：")
             for f in failed_files:
@@ -1128,7 +1133,7 @@ class Application:
         win = Toplevel(self.root)
         win.title("使用说明")
         win.geometry("600x400")
-        text_area = scrolledtext.ScrolledText(win, wrap=tk.WORD, font=("Consolas", 12))
+        text_area = scrolledtext.ScrolledText(win, wrap=tk.CHAR, font=("Microsoft YaHei", 12))
         text_area.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         text_area.insert(tk.END, UPDATE_LOG)
         text_area.config(state=tk.DISABLED)
