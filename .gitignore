@@ -1,5 +1,6 @@
 *.log
 *.spec
+*.json
 *test*
 
 study/
@@ -8,3 +9,4 @@ study/
 .vscode/
 build/
 dist/
+.env
